@@ -11,26 +11,24 @@ import android.widget.LinearLayout;
  * Created by vincent on 2015/3/6 0006.
  */
 public class Main extends Activity {
-    private static final String TAG = "com.sample.app.Main";
+    private static final String TAG = "Main";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i(TAG, "Activity onCreate()");
         LinearLayout viewGroup = new LinearLayout(this);
         viewGroup.setLayoutParams(new ActionBar.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
 
         setContentView(viewGroup);
-
-        Log.i(TAG, "onCreate() try to finish");
+        Log.d(TAG, "onCreate()");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        Log.i(TAG, "on activity destroy");
+        Log.i(TAG, "onDestroy()");
     }
 }

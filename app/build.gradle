@@ -8,22 +8,21 @@ buildscript {
 }
 apply plugin: 'com.android.application'
 
-
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
 
     sourceSets{
         main{
+            manifest.srcFile 'AndroidManifest.xml'
             java.srcDirs=['src']
             res.srcDirs=['res']
-            manifest.srcFile 'AndroidManifest.xml'
         }
     }
 
     defaultConfig {
         minSdkVersion 11
-        targetSdkVersion 21
+        targetSdkVersion 19
         versionCode 1
         versionName "1.0"
     }
