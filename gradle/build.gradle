@@ -8,7 +8,6 @@ buildscript {
 }
 apply plugin: 'com.android.application'
 
-
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
@@ -27,5 +26,21 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    buildTypes {
+        applicationVariants.all { variant ->
+            variant.outputs.each { output ->
+                output.outputFile = new File(output.outputFile.parent, output.outputFile.name.replace(".apk", "-" + defaultConfig.versionName + ".apk"))
+            }
+        }
+
+        release{
+        }
+        debug{
+        }
+    }
 }
 
+task hello << {
+    println "Hello world!"
+}

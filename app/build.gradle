@@ -27,5 +27,20 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    //signingConfigs {
+    //    release {
+    //        storeFile     file("path/to/your/keystore.release")
+    //        storePassword "**********"
+    //        keyAlias      "******"
+    //        keyPassword   "**********"
+    //    }
+    //}
+
+    //buildTypes {
+    //    release {
+    //        signingConfig signingConfigs.release
+    //    }
+    //}
 }
 
