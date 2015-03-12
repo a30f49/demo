@@ -38,6 +38,9 @@ public class Service extends IntentService {
         Log.i(TAG, "Screen Width: " + width);
         Log.i(TAG, "Screen Height:" + height);
 
+        String deviceInfo = DeviceUtils.getDeviceInfo(context);
+        Log.i(TAG, "Device Info:" + deviceInfo);
+
         Log.i(TAG, "stop itself...");
         stopSelf();
         Log.i(TAG, "stop!");
