@@ -2,7 +2,7 @@ package com.sample.viewdrophelper.app;
 
 import android.app.Activity;
 import android.view.Gravity;
-import com.sample.viewdrophelper.view.ContentLayout;
+import com.sample.viewdrophelper.view.OffsetLayout;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
@@ -10,24 +10,23 @@ import org.robolectric.RobolectricTestRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import com.sample.viewdrophelper.app.R;
 
 /**
  * Created by vincent on 2015/3/13.
  */
 @RunWith(RobolectricTestRunner.class)
-public class MainActivityTest {
+public class DragContentActivityTest {
     @Test
     public void test_layoutParams(){
 
-        Activity activity = Robolectric.buildActivity(MainActivity.class)
+        Activity activity = Robolectric.buildActivity(DragContentActivity.class)
                 .create().start().resume().get();
         assertTrue(activity!=null);
 
-        ContentLayout container = (ContentLayout) activity.findViewById(R.id.container);
+        OffsetLayout container = (OffsetLayout) activity.findViewById(R.id.container);
         assertTrue(container!=null);
 
-        ContentLayout.LayoutParams lp = (ContentLayout.LayoutParams)
+        OffsetLayout.LayoutParams lp = (OffsetLayout.LayoutParams)
                 container.getChildAt(0).getLayoutParams();
 
         assertEquals(Gravity.TOP, lp.getGravity());

@@ -1,0 +1,39 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+    <com.sample.viewdrophelper.view.PullToRefreshLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:background="@android:color/holo_purple"
+                      android:layout_gravity="top"
+                      android:orientation="vertical">
+            <RefreshView android:layout_width="match_parent"
+                      android:layout_height="400dp"
+                      android:name="RefreshView"
+                      android:id="@+id/refresh"
+                      android:layout_gravity="bottom"
+                      android:gravity="bottom|center"
+                      android:textColor="@android:color/white"
+                      android:text="下拉刷新..."/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     android:background="@android:color/holo_blue_dark">
+            <TextView
+                    android:text="@string/hello_world"
+                    android:textColor="@android:color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"/>
+        </LinearLayout>
+
+    </com.sample.viewdrophelper.view.PullToRefreshLayout>
+
+</RelativeLayout>

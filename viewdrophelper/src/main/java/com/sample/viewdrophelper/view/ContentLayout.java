@@ -1,169 +1,217 @@
 package com.sample.viewdrophelper.view;
 
 import android.content.Context;
-import android.content.res.TypedArray;
+import android.support.v4.view.MotionEventCompat;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 
 /**
  * Created by vincent on 2015/3/13.
  */
-public class ContentLayout extends ViewGroup{
+public class ContentLayout extends OffsetLayout {
+    private static final String TAG = "DragContentLayout";
+    private static final float DEFAULT_MAX_DRAG_RANGE = 0.25f;
+
     View mTarget;
 
+    private float mInitialMotionX;
+    private float mInitialMotionY;
+    private float mMaxOffsetRange;
+
+    final ViewDragHelper mDragHelper;
+    DragListener mDragListener;
+
     public ContentLayout(Context context) {
-        super(context);
+        this(context, null, 0);
     }
 
     public ContentLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, 0);
     }
 
     public ContentLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
+        mDragHelper = ViewDragHelper.create(this, 1.0f, new DragHelperCallback());
+        mMaxOffsetRange = DEFAULT_MAX_DRAG_RANGE;
     }
 
     @Override
     protected void onFinishInflate() {
-        super.onFinishInflate();
+        Log.i(TAG, "onFinishInflate()");
+        if(getChildCount() > 1){
+            throw new IllegalStateException("ContentLayout can only support one child.");
+        }
+
         mTarget = getChildAt(0);
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-        measureChildren(widthMeasureSpec, heightMeasureSpec);
-
-        widthMeasureSpec = MeasureSpec.makeMeasureSpec(
-                getMeasuredWidth() - getPaddingRight() - getPaddingLeft(),
-                MeasureSpec.EXACTLY);
-        heightMeasureSpec = MeasureSpec.makeMeasureSpec(
-                getMeasuredHeight() - getPaddingTop() - getPaddingBottom(),
-                MeasureSpec.EXACTLY);
-
-        setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
+    public void setDragListener(DragListener listener){
+        mDragListener = listener;
     }
 
+    public void setMaxDragRange(float maxOffsetRange){
+        this.mMaxOffsetRange = maxOffsetRange;
+    }
 
     @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        int paddingTop = getPaddingTop();
-        int paddingLeft = getPaddingLeft();
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
 
-        for(int index=0; index<getChildCount(); index++) {
-            View child = getChildAt(index);
-            if (child.getVisibility() == View.GONE) {
-                return;
+        final int action = MotionEventCompat.getActionMasked(ev);
+
+        if (!(action != MotionEvent.ACTION_DOWN)) {
+            mDragHelper.cancel();
+            return super.onInterceptTouchEvent(ev);
+        }
+
+        if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
+            mDragHelper.cancel();
+            return false;
+        }
+
+        boolean interceptTap = false;
+
+        switch (action) {
+            case MotionEvent.ACTION_DOWN: {
+                final float x = ev.getX();
+                final float y = ev.getY();
+                mInitialMotionX = x;
+                mInitialMotionY = y;
+
+                if (mDragHelper.isViewUnder(mTarget, (int) x, (int) y)) {
+                    interceptTap = true;
+                }
+                break;
             }
 
-            LayoutParams lp = (LayoutParams) child.getLayoutParams();
-            int offsetX = (int) lp.getOffsetX();
-            int offsetY = (int) lp.getOffsetY();
-
-            child.layout(
-                    l + paddingTop + offsetX,
-                    t + paddingLeft + offsetY,
-                    l + paddingLeft + offsetX + child.getMeasuredWidth(),
-                    l + paddingTop + offsetY + child.getMeasuredHeight());
+            case MotionEvent.ACTION_MOVE: {
+                final float x = ev.getX();
+                final float y = ev.getY();
+                final float adx = Math.abs(x - mInitialMotionX);
+                final float ady = Math.abs(y - mInitialMotionY);
+                final int slop = mDragHelper.getTouchSlop();
+                if (adx > slop && ady > adx) {
+                    mDragHelper.cancel();
+                    return false;
+                }
+            }
         }
+
+        final boolean interceptForDrag = mDragHelper.shouldInterceptTouchEvent(ev);
+
+        return interceptForDrag || interceptTap;
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        mDragHelper.processTouchEvent(ev);
+
+        final int action = ev.getAction();
+        boolean wantTouchEvents = true;
+
+        switch (action & MotionEventCompat.ACTION_MASK) {
+            case MotionEvent.ACTION_DOWN: {
+                final float x = ev.getX();
+                final float y = ev.getY();
+                mInitialMotionX = x;
+                mInitialMotionY = y;
+
+                if(mDragListener !=null){
+                    mDragListener.onStart(x, y);
+                }
+                break;
+            }
+
+            case MotionEvent.ACTION_UP: {
+                Log.i(TAG, "onTouchEvent():ACTION_UP");
+                final float x = ev.getX();
+                final float y = ev.getY();
+                final float dx = x - mInitialMotionX;
+                final float dy = y - mInitialMotionY;
+                final int slop = mDragHelper.getTouchSlop();
+                if (dx * dx + dy * dy < slop * slop &&
+                        mDragHelper.isViewUnder(mTarget, (int) x, (int) y)) {
+                    // Taps close a dimmed open pane.
+                    if(mDragListener!=null){
+                        mDragListener.onTap(x, y);
+                    }
+                    break;
+                }
+                break;
+            }
+        }
+
+        return wantTouchEvents;
+    }
+
+    @Override
+    public void computeScroll() {
+        Log.i(TAG, "computeScroll()");
+        if (mDragHelper.continueSettling(true)) {
+            ViewCompat.postInvalidateOnAnimation(this);
+        }
+    }
 
     /**
-     * LayoutParams Override methods
-     * @param p
-     * @return
+     * class DragHelperCallback
      */
-    @Override
-    protected boolean checkLayoutParams(ViewGroup.LayoutParams p) {
-        return p instanceof LayoutParams;
+    class DragHelperCallback extends ViewDragHelper.Callback {
+
+        @Override
+        public boolean tryCaptureView(View child, int pointerId) {
+            return child == mTarget;
+        }
+
+        @Override
+        public int clampViewPositionVertical(View child, int top, int dy) {
+            Log.i(TAG, "clampViewPositionVertical(top:"+top+",dy:"+dy+")");
+            final int offset = top - getPaddingTop();
+            final int totalOffset = getHeight();
+
+            int oldTop = top - dy;
+            float offsetPercent = Math.abs( offset / ((float) totalOffset * mMaxOffsetRange) );
+
+            int targetY = (int) (oldTop + dy * (1 - offsetPercent));
+
+            return targetY;
+        }
+
+        @Override
+        public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
+            Log.i(TAG, "onViewPositionChanged(left:"+left+",top:"+top+",dx:"+dx+",dy:"+dy+")");
+
+            ((LayoutParams)(changedView.getLayoutParams())).setOffset(left, top);
+
+            if(mDragListener!=null){
+                mDragListener.onDrag(left, top, dx, dy);
+            }
+
+            requestLayout();
+        }
+
+        @Override
+        public void onViewReleased(View releasedChild, float xvel, float yvel) {
+            Log.i(TAG, "onViewReleased(xvel:"+xvel+",yvel:"+yvel+")");
+
+            mDragHelper.settleCapturedViewAt(releasedChild.getLeft(), getPaddingTop());
+
+            if(mDragListener!=null){
+                mDragListener.onReleased();
+            }
+
+            invalidate();
+        }
     }
 
-    @Override
-    protected ViewGroup.LayoutParams generateDefaultLayoutParams() {
-        return new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-    }
-
-    @Override
-    protected ViewGroup.LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
-        return new LayoutParams(p);
-    }
-
-    @Override
-    public ViewGroup.LayoutParams generateLayoutParams(AttributeSet attrs) {
-        return new LayoutParams(getContext(), attrs);
-    }
-
-
-
-
-    /**
-     * class LayoutParams
-     */
-    public static class LayoutParams extends MarginLayoutParams {
-
-        private static final int[] LAYOUT_ATTRS = new int[] {
-                android.R.attr.layout_gravity,
-                android.R.attr.layout_x,
-                android.R.attr.layout_y,
-        };
-
-        int gravity;
-        float offsetX;
-        float offsetY;
-
-        public LayoutParams(Context c, AttributeSet attrs) {
-            super(c, attrs);
-
-            final TypedArray a = c.obtainStyledAttributes(attrs, LAYOUT_ATTRS);
-            this.gravity = a.getInt(0, Gravity.NO_GRAVITY);
-            this.offsetX = a.getDimension(1, 0f);
-            this.offsetY = a.getDimension(2, 0f);
-            //
-
-            a.recycle();
-        }
-
-        public LayoutParams(int width, int height) {
-            super(width, height);
-        }
-
-        public LayoutParams(LayoutParams source) {
-            super(source);
-        }
-
-        public LayoutParams(ViewGroup.LayoutParams source) {
-            super(source);
-        }
-
-        public LayoutParams(MarginLayoutParams source) {
-            super(source);
-        }
-
-        public LayoutParams setGravity(int gravity){
-            this.gravity = gravity;
-            return this;
-        }
-
-        public int getGravity(){
-            return this.gravity;
-        }
-
-        public LayoutParams setOffset(float offsetX, float offsetY){
-            this.offsetX = offsetX;
-            this.offsetY = offsetY;
-            return this;
-        }
-
-        public float getOffsetX(){
-            return this.offsetX;
-        }
-
-        public float getOffsetY(){
-            return this.offsetY;
-        }
+    static interface DragListener{
+        void onStart(float x, float y);
+        void onTap(float x, float y);
+        void onDrag(int left, int top, int dx, int dy);
+        void onReleased();
     }
 }
