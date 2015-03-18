@@ -18,7 +18,7 @@
         </activity>
 
         <provider
-            android:name=".Provider"
+            android:name="com.sample.contentprovider.provider.TestProvider"
             android:authorities="com.sample.provider"
             android:enabled="true"
             android:exported="false" >

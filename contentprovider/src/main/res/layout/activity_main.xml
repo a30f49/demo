@@ -2,10 +2,40 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
                 tools:context=".MainActivity">
-
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:id="@+id/item_id"
+            android:hint="item id"
+            android:background="#ff333333"
+            android:gravity="center|left"
+            android:paddingLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"/>
+    <Space android:layout_width="match_parent"
+           android:layout_height="1dp"
+           android:id="@+id/separator"
+            android:layout_below="@id/item_id"/>
+    <TextView
+            android:id="@+id/item_name"
+            android:layout_below="@id/separator"
+            android:paddingLeft="10dp"
+            android:hint="item name"
+            android:gravity="center|left"
+            android:background="#ff333333"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"/>
 
+    <ProgressBar android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:id="@+id/progress"
+                 android:visibility="gone"
+            android:layout_centerInParent="true"/>
+
+    <Button android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/action_test"
+            android:text="test"
+            android:background="@drawable/test_action_selector"/>
 </RelativeLayout>
