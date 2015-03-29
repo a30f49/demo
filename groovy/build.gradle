@@ -11,4 +11,15 @@ dependencies {
     testCompile 'org.mockito:mockito-all:1.9.5'
 }
 
+apply plugin: 'maven-publish'
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId 'com.sample'
+            artifactId 'groovy'
+            version '1.0.0-SNAPSHOT'
 
+            from components.java
+        }
+    }
+}
