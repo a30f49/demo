@@ -1,0 +1,42 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.0.0'
+    }
+}
+apply plugin: 'com.android.application'
+
+repositories {
+    jcenter()
+	mavenLocal()
+}
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    sourceSets{
+        main{
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs=['src']
+            res.srcDirs=['res']
+        }
+   }
+
+    defaultConfig {
+        applicationId "com.sample.groovy.android"
+        minSdkVersion 14
+        targetSdkVersion 19
+        versionCode 1
+        versionName "1.0"
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+}
+
