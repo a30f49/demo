@@ -4,26 +4,31 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.0.0'
+        classpath 'org.codehaus.groovy:gradle-groovy-android-plugin:0.3.5'
     }
 }
 apply plugin: 'com.android.application'
+apply plugin: 'groovyx.grooid.groovy-android'
 
 repositories {
     jcenter()
 	mavenLocal()
 }
 
+project.androidGroovy {
+    options {
+        configure(groovyOptions) {
+            encoding = 'UTF-8'
+            forkOptions.jvmArgs = ['-noverify'] // maybe necessary if you use Google Play Services
+        }
+        sourceCompatibility = '1.7'
+        targetCompatibility = '1.7'
+    }
+}
+
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
-
-    sourceSets{
-        main{
-            manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs=['src']
-            res.srcDirs=['res']
-        }
-   }
 
     defaultConfig {
         applicationId "com.sample.groovy.android"
@@ -38,5 +43,7 @@ android {
 }
 
 dependencies {
+    compile 'org.codehaus.groovy:groovy:2.4.1:grooid'
+    compile project(':groovy')
 }
 
