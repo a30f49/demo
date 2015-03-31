@@ -1,0 +1,11 @@
+<resources>
+    <style name="Theme.MyTheme" parent="Theme.AppCompat.Light">
+
+        <!-- Disable action bar -->
+        <item name="windowActionBar">false</item>
+
+        <!-- Set AppCompat’s color theming attrs -->
+        <item name="colorPrimary">#445566</item>
+        <item name="colorPrimaryDark">#223344</item>
+    </style>
+</resources>
