@@ -14,7 +14,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+        <item name="actionBarSize">64dp</item>
     </style>
-
 
 </resources>
