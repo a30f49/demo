@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">popup</string>
+    <string name="action_dropdown">Dropdown</string>
+    <string name="action_popup">Popup</string>
+</resources>
