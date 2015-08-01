@@ -5,31 +5,51 @@
               android:orientation="vertical"
               android:background="@color/content_bg"
               tools:context=".MainActivity">
-        <TextView android:layout_width="match_parent"
-                  android:layout_height="40dp"
-                  android:layout_gravity="center_vertical"
-                  android:background="@color/item_bg"
-                  android:id="@+id/picker"
-                  android:gravity="center_vertical"
-                  android:paddingLeft="?attr/listPreferredItemPaddingLeft"
-                  android:hint="日期"
-                />
+    <TextView android:layout_width="match_parent"
+              android:layout_height="40dp"
+              android:layout_gravity="center_vertical"
+              android:background="@color/item_bg"
+              android:id="@+id/demo"
+              android:gravity="center"
+              android:paddingLeft="?attr/listPreferredItemPaddingLeft"
+              android:text="Demo Picker"
+              android:textColor="@android:color/black"
+            />
     <Space android:layout_width="match_parent" android:layout_height="1dip"/>
     <TextView android:layout_width="match_parent"
               android:layout_height="40dp"
               android:layout_gravity="center_vertical"
               android:background="@color/item_bg"
-              android:id="@+id/tvTime"
-              android:gravity="center_vertical"
+              android:id="@+id/time"
+              android:gravity="center"
               android:paddingLeft="?attr/listPreferredItemPaddingLeft"
-              android:hint="时间"
+              android:text="Time PopupWindow"
+              android:textColor="@android:color/black"
             />
     <Space android:layout_width="match_parent" android:layout_height="1dip"/>
-    <com.dianjiang.plugin.widget.pickerview.WheelView
-            android:id="@+id/yearview"
+    <TextView android:layout_width="match_parent"
+              android:layout_height="40dp"
+              android:layout_gravity="center_vertical"
+              android:background="@color/item_bg"
+              android:id="@+id/custom_date"
+              android:gravity="center"
+              android:paddingLeft="?attr/listPreferredItemPaddingLeft"
+              android:text="Custom Picker Dialog"
+              android:textColor="@android:color/black"
+            />
+    <Space android:layout_width="match_parent" android:layout_height="1dip"/>
+    <TextView android:layout_width="match_parent"
+          android:layout_height="30dp"
+              android:text="Year Only"
+              android:gravity="bottom"
+              android:paddingLeft="12dp"
+              android:paddingBottom="3dp"
+              android:visibility="gone"
+            />
+    <com.dianjiang.plugin.widget.picker.WheelView
+            android:id="@+id/yearonlyview"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:background="@color/item_bg"
-            android:layout_height="100dp" />
-    <Space android:layout_width="match_parent" android:layout_height="1dip"/>
-    <include layout="@layout/datepicker"/>
+            android:layout_height="200dp"/>
 </LinearLayout>

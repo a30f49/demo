@@ -5,35 +5,41 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
-import com.dianjiang.app.pickerdialog.OptionPopupWindow;
-import com.dianjiang.app.pickerdialog.TimePopupWindow;
-import com.dianjiang.app.pickerdialog.WheelTimePicker;
+import com.dianjiang.plugin.widget.picker.OptionsPopupWindow;
+import com.dianjiang.plugin.widget.picker.TimePopupWindow;
+import com.dianjiang.plugin.widget.picker.WheelTimePicker;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class PickerActivity extends ActionBarActivity {
+public class DemoPickerActivity extends ActionBarActivity {
 
     private ArrayList<String> options1Items = new ArrayList<String>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<ArrayList<String>>();
     private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<ArrayList<ArrayList<String>>>();
     private TextView tvTime, tvOptions;
     TimePopupWindow pwTime;
-    OptionPopupWindow pwOptions;
+    OptionsPopupWindow pwOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_demo);
         tvTime=(TextView) findViewById(R.id.tvTime);
         tvOptions=(TextView) findViewById(R.id.tvOptions);
 
         //时间选择器
         pwTime = new TimePopupWindow(this, WheelTimePicker.Type.YEAR_MONTH_DAY);
+        pwTime.setOnTimeSelectListener(new TimePopupWindow.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(java.util.Date date) {
+                tvTime.setText(new SimpleDateFormat(WheelTimePicker.DEFAULT_DATETIME_PATTERN).format(date));
+            }
+        });
 
         //选项选择器
-        pwOptions = new OptionPopupWindow(this);
+        pwOptions = new OptionsPopupWindow(this);
 
         //选项1
         options1Items.add("广东");
@@ -68,10 +74,10 @@ public class PickerActivity extends ActionBarActivity {
         options3Items_01.add(options3Items_01_03);
 
         ArrayList<String> options3Items_02_01=new ArrayList<String>();
-        options3Items_02_01.add("长沙1");
+        options3Items_02_01.add("长沙");
         options3Items_02.add(options3Items_02_01);
         ArrayList<String> options3Items_02_02=new ArrayList<String>();
-        options3Items_02_02.add("岳1");
+        options3Items_02_02.add("岳阳");
         options3Items_02.add(options3Items_02_02);
 
         options3Items.add(options3Items_01);
@@ -84,14 +90,14 @@ public class PickerActivity extends ActionBarActivity {
         //设置默认选中的三级项目
         pwOptions.setSelectOptions(0, 0, 0);
         //监听确定选择按钮
-        pwOptions.setOnoptionsSelectListener(new OptionPopupWindow.OnOptionsSelectListener() {
+        pwOptions.setOnOptionsSelectListener(new OptionsPopupWindow.OnOptionsSelectListener() {
 
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 //返回的分别是三个级别的选中位置
                 String tx = options1Items.get(options1)
-                    +options2Items.get(options1).get(option2)
-                    +options3Items.get(options1).get(option2).get(options3);
+                        + options2Items.get(options1).get(option2)
+                        + options3Items.get(options1).get(option2).get(options3);
                 tvOptions.setText(tx);
             }
         });

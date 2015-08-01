@@ -1,13 +1,12 @@
 package com.sample.picker.app;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.PopupWindow;
-import com.dianjiang.app.pickerdialog.WheelTimePicker;
+import com.dianjiang.plugin.widget.picker.WheelTimePicker;
 
 import java.util.Calendar;
 
@@ -27,7 +26,7 @@ public class TimePickerPopupWindow extends PopupWindow {
 		this.setAnimationStyle(R.style.timepopwindow_anim_style);
 
 		LayoutInflater mLayoutInflater = LayoutInflater.from(context);
-		View rootView = mLayoutInflater.inflate(R.layout.datepicker, null);
+		View rootView = mLayoutInflater.inflate(R.layout.timepicker, null);
 		wheelTimePicker = new WheelTimePicker(rootView, type);
 
 		//select now

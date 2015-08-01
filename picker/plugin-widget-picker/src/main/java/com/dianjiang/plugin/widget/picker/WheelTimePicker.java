@@ -1,19 +1,18 @@
-package com.dianjiang.app.pickerdialog;
+package com.dianjiang.plugin.widget.picker;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 
-import com.dianjiang.plugin.widget.pickerview.WheelView;
-import com.dianjiang.plugin.widget.pickerview.internal.NumericWheelAdapter;
-import com.dianjiang.plugin.widget.pickerview.internal.OnWheelChangedListener;
+import com.dianjiang.app.pickerdialog.R;
+import com.dianjiang.plugin.widget.picker.internal.NumericWheelAdapter;
+import com.dianjiang.plugin.widget.picker.internal.OnWheelChangedListener;
 
 import android.content.Context;
 import android.view.View;
 
 public class WheelTimePicker {
-	public static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	//public static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	public static String DEFAULT_DATETIME_PATTERN = "yyyy-MM-dd HH:mm";
 
 	private View view;
 	private WheelView wv_year;

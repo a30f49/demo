@@ -1,6 +1,6 @@
-package com.dianjiang.plugin.widget.pickerview.internal;
+package com.dianjiang.plugin.widget.picker.internal;
 
-import com.dianjiang.plugin.widget.pickerview.WheelView;
+import com.dianjiang.plugin.widget.picker.WheelView;
 
 /**
  * Wheel changed listener interface.

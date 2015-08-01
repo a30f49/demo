@@ -17,13 +17,10 @@
  *  limitations under the License.
  */
 
-package com.dianjiang.plugin.widget.pickerview;
+package com.dianjiang.plugin.widget.picker;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import android.util.DisplayMetrics;
-import com.dianjiang.plugin.widget.pickerview.internal.*;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -45,8 +42,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
-import com.dianjiang.plugin.widget.pickerview.support.DensityUtils;
-import com.dianjiang.plugin.widget.pickerview.support.ScreenUtils;
+import com.dianjiang.plugin.widget.picker.internal.OnWheelChangedListener;
+import com.dianjiang.plugin.widget.picker.internal.OnWheelScrollListener;
+import com.dianjiang.plugin.widget.picker.internal.WheelAdapter;
 
 /**
  * Numeric wheel view.
@@ -98,9 +96,9 @@ public class WheelView extends View {
 	private WheelAdapter adapter = null;
 	private int currentItem = 0;
 
-	private float density;//dp
-	private float scaledDensity;//sp
-	private int defaultTextSize;
+	//private float density;//dp
+	//private float scaledDensity;//sp
+	private int defaultTextSize = 48;
 
 	private int textSize;
 	private int itemOffset;
@@ -180,14 +178,12 @@ public class WheelView extends View {
 	 *            the context
 	 */
 	private void initData(Context context) {
-		DisplayMetrics displayMetrics = ScreenUtils.getDisplayMetrics(context);
-		density = displayMetrics.density;
-		scaledDensity = displayMetrics.scaledDensity;
-
-		defaultTextSize = displayMetrics.heightPixels / 4;
+		//DisplayMetrics displayMetrics = ScreenUtils.getDisplayMetrics(context);
+		//density = displayMetrics.density;
+		//scaledDensity = displayMetrics.scaledDensity;
 
 		textSize = defaultTextSize;
-		labelOffset = DensityUtils.dp2px(density, DEFAULT_LABEL_OFFSET);
+		labelOffset = DEFAULT_LABEL_OFFSET;
 
 		///
 		gestureDetector = new GestureDetector(context, gestureListener);
@@ -203,7 +199,7 @@ public class WheelView extends View {
 		if(textSize==0){
 			return this;
 		}
-		this.textSize = (int)(textSize * scaledDensity + 0.5f);
+		this.textSize = textSize;
 		this.itemOffset = textSize / 5;
 		return this;
 	}
@@ -213,7 +209,7 @@ public class WheelView extends View {
 	 * @param offset
 	 */
 	public WheelView setLabelOffset(int offset){
-		this.labelOffset = (int)(offset * density + 0.5f);
+		this.labelOffset = offset;
 		return this;
 	}
 

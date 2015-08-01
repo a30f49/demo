@@ -2,4 +2,7 @@
 <resources>
     <color name="content_bg">#ffcccccc</color>
     <color name="item_bg">#ffffffff</color>
+
+    <color name="wheel_timebtn_normal">#54a3fa</color>
+    <color name="wheel_timebtn_pressed">#CCCCCC</color>
 </resources>

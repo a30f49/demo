@@ -1,0 +1,29 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@color/content_bg"
+              tools:context=".MainActivity">
+    <TextView android:layout_width="match_parent"
+              android:layout_height="50dp"
+              android:layout_gravity="center_vertical"
+              android:background="#ffeeeef8"
+              android:id="@+id/tvTime"
+              android:gravity="center"
+              android:paddingLeft="?attr/listPreferredItemPaddingLeft"
+              android:text="Time Picker"
+              android:textColor="@android:color/black"
+            />
+    <Space android:layout_width="match_parent" android:layout_height="1dip"/>
+    <TextView android:layout_width="match_parent"
+              android:layout_height="50dp"
+              android:layout_gravity="center_vertical"
+              android:background="#ffeeeef8"
+              android:id="@+id/tvOptions"
+              android:gravity="center"
+              android:paddingLeft="?attr/listPreferredItemPaddingLeft"
+              android:text="Options Picker"
+              android:textColor="@android:color/black"
+            />
+</LinearLayout>

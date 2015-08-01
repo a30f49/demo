@@ -1,6 +1,7 @@
-package com.dianjiang.app.pickerdialog;
+package com.dianjiang.plugin.widget.picker;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.PopupWindow;
+import com.dianjiang.app.pickerdialog.R;
 
 /**
  * 时间选择器
@@ -136,7 +138,8 @@ public class TimePopupWindow extends PopupWindow implements OnClickListener {
 		} else {
 			if (timeSelectListener != null) {
 				try {
-					Date date = WheelTimePicker.dateFormat.parse(wheelTimePicker.getTime());
+					SimpleDateFormat dateFormat = new SimpleDateFormat(WheelTimePicker.DEFAULT_DATETIME_PATTERN);
+					Date date = dateFormat.parse(wheelTimePicker.getTime());
 					timeSelectListener.onTimeSelect(date);
 				} catch (ParseException e) {
 					e.printStackTrace();

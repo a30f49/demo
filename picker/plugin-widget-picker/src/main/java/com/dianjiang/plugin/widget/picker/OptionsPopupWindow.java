@@ -1,8 +1,7 @@
-package com.dianjiang.app.pickerdialog;
+package com.dianjiang.plugin.widget.picker;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
@@ -10,19 +9,20 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.PopupWindow;
+import com.dianjiang.app.pickerdialog.R;
 
 /**
  * @author Sai
  */
-public class OptionPopupWindow extends PopupWindow implements OnClickListener {
+public class OptionsPopupWindow extends PopupWindow implements OnClickListener {
 	private View rootView;
-	WheelOptionPicker wheelOptionPicker;
+	WheelOptionsPicker wheelOptionsPicker;
 	private View btnSubmit, btnCancel;
 	private OnOptionsSelectListener optionsSelectListener;
 	private static final String TAG_SUBMIT = "submit";
 	private static final String TAG_CANCEL = "cancel";
 
-	public OptionPopupWindow(Context context) {
+	public OptionsPopupWindow(Context context) {
 		super(context);
 		this.setWidth(LayoutParams.FILL_PARENT);
 		this.setHeight(LayoutParams.WRAP_CONTENT);
@@ -42,25 +42,25 @@ public class OptionPopupWindow extends PopupWindow implements OnClickListener {
 
 		// ----转轮
 		final View options_group = rootView.findViewById(R.id.options_group);
-		wheelOptionPicker = new WheelOptionPicker(options_group);
+		wheelOptionsPicker = new WheelOptionsPicker(options_group);
 
 		setContentView(rootView);
 	}
 
 	public void setPicker(ArrayList<String> optionsItems) {
-		wheelOptionPicker.setPicker(optionsItems, null, null, false);
+		wheelOptionsPicker.setPicker(optionsItems, null, null, false);
 	}
 
 	public void setPicker(ArrayList<String> options1Items,
 			ArrayList<ArrayList<String>> options2Items, boolean linkage) {
-		wheelOptionPicker.setPicker(options1Items, options2Items, null, linkage);
+		wheelOptionsPicker.setPicker(options1Items, options2Items, null, linkage);
 	}
 
 	public void setPicker(ArrayList<String> options1Items,
 			ArrayList<ArrayList<String>> options2Items,
 			ArrayList<ArrayList<ArrayList<String>>> options3Items,
 			boolean linkage) {
-		wheelOptionPicker.setPicker(options1Items, options2Items, options3Items,
+		wheelOptionsPicker.setPicker(options1Items, options2Items, options3Items,
 				linkage);
 	}
 	/**
@@ -68,7 +68,7 @@ public class OptionPopupWindow extends PopupWindow implements OnClickListener {
 	 * @param option1
 	 */
 	public void setSelectOptions(int option1){
-		wheelOptionPicker.setCurrentItems(option1, 0, 0);
+		wheelOptionsPicker.setCurrentItems(option1, 0, 0);
 	}
 	/**
 	 * 设置选中的item位置
@@ -76,7 +76,7 @@ public class OptionPopupWindow extends PopupWindow implements OnClickListener {
 	 * @param option2
 	 */
 	public void setSelectOptions(int option1, int option2){
-		wheelOptionPicker.setCurrentItems(option1, option2, 0);
+		wheelOptionsPicker.setCurrentItems(option1, option2, 0);
 	}
 	/**
 	 * 设置选中的item位置
@@ -85,15 +85,14 @@ public class OptionPopupWindow extends PopupWindow implements OnClickListener {
 	 * @param option3
 	 */
 	public void setSelectOptions(int option1, int option2, int option3){
-		wheelOptionPicker.setCurrentItems(option1, option2, option3);
+		wheelOptionsPicker.setCurrentItems(option1, option2, option3);
 	}
 	/**
 	 * 设置选项的单位
 	 * @param label1
-	 * @param label2
 	 */
 	public void setLabels(String label1){
-		wheelOptionPicker.setLabels(label1, null, null);
+		wheelOptionsPicker.setLabels(label1, null, null);
 	}
 	/**
 	 * 设置选项的单位
@@ -101,7 +100,7 @@ public class OptionPopupWindow extends PopupWindow implements OnClickListener {
 	 * @param label2
 	 */
 	public void setLabels(String label1,String label2){
-		wheelOptionPicker.setLabels(label1, label2, null);
+		wheelOptionsPicker.setLabels(label1, label2, null);
 	}
 	/**
 	 * 设置选项的单位
@@ -110,14 +109,14 @@ public class OptionPopupWindow extends PopupWindow implements OnClickListener {
 	 * @param label3
 	 */
 	public void setLabels(String label1,String label2,String label3){
-		wheelOptionPicker.setLabels(label1, label2, label3);
+		wheelOptionsPicker.setLabels(label1, label2, label3);
 	}
 	/**
 	 * 设置是否循环滚动
 	 * @param cyclic
 	 */
 	public void setCyclic(boolean cyclic){
-		wheelOptionPicker.setCyclic(cyclic);
+		wheelOptionsPicker.setCyclic(cyclic);
 	}
 
 	@Override
@@ -133,7 +132,7 @@ public class OptionPopupWindow extends PopupWindow implements OnClickListener {
 		{
 			if(optionsSelectListener!=null)
 			{
-				int[] optionsCurrentItems= wheelOptionPicker.getCurrentItems();
+				int[] optionsCurrentItems= wheelOptionsPicker.getCurrentItems();
 				optionsSelectListener.onOptionsSelect(optionsCurrentItems[0], optionsCurrentItems[1], optionsCurrentItems[2]);
 			}
 			dismiss();
@@ -142,10 +141,10 @@ public class OptionPopupWindow extends PopupWindow implements OnClickListener {
 	}
 
 	public interface OnOptionsSelectListener {
-		public void onOptionsSelect(int options1, int option2, int options3);
+		void onOptionsSelect(int options1, int option2, int options3);
 	}
 
-	public void setOnoptionsSelectListener(
+	public void setOnOptionsSelectListener(
 			OnOptionsSelectListener optionsSelectListener) {
 		this.optionsSelectListener = optionsSelectListener;
 	}

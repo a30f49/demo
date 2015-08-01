@@ -1,12 +1,14 @@
 package com.sample.picker.app;
 
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.dianjiang.app.pickerdialog.WheelTimePicker;
-import com.dianjiang.plugin.widget.pickerview.WheelView;
+import android.widget.LinearLayout;
+import com.dianjiang.plugin.widget.picker.WheelTimePicker;
+import com.dianjiang.plugin.widget.picker.WheelView;
 
 import java.util.Calendar;
 
@@ -25,11 +27,28 @@ public class CustomPickerDialog extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NO_FRAME, R.style.DialogTheme);
+
+
+    }
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        return super.onCreateDialog(savedInstanceState);
+   }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        //int width = getResources().getDisplayMetrics().widthPixels;
+        //int height =getResources().getDisplayMetrics().heightPixels;
+        //getDialog().getWindow().setLayout(width, height);
+        getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-       return inflater.inflate(R.layout.dialog_long_date_picker, container, false);
+       return inflater.inflate(R.layout.dialog_custom_picker, container, false);
     }
 
     @Override

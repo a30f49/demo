@@ -1,4 +1,4 @@
-package com.dianjiang.plugin.widget.pickerview.internal;
+package com.dianjiang.plugin.widget.picker.internal;
 
 public interface WheelAdapter {
 	/**

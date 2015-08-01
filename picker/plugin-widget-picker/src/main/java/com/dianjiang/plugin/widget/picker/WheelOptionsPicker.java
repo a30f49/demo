@@ -1,15 +1,15 @@
-package com.dianjiang.app.pickerdialog;
+package com.dianjiang.plugin.widget.picker;
 
 import java.util.ArrayList;
 
 import android.content.Context;
 import android.view.View;
 
-import com.dianjiang.plugin.widget.pickerview.WheelView;
-import com.dianjiang.plugin.widget.pickerview.internal.ArrayWheelAdapter;
-import com.dianjiang.plugin.widget.pickerview.internal.OnWheelChangedListener;
+import com.dianjiang.app.pickerdialog.R;
+import com.dianjiang.plugin.widget.picker.internal.ArrayWheelAdapter;
+import com.dianjiang.plugin.widget.picker.internal.OnWheelChangedListener;
 
-public class WheelOptionPicker {
+public class WheelOptionsPicker {
 	private View view;
 	private WheelView wv_option1;
 	private WheelView wv_option2;
@@ -28,7 +28,7 @@ public class WheelOptionPicker {
 		this.view = view;
 	}
 
-	public WheelOptionPicker(View view) {
+	public WheelOptionsPicker(View view) {
 		super();
 		this.view = view;
 		setView(view);
