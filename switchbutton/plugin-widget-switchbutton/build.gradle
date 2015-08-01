@@ -1,0 +1,44 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.1.0'
+    }
+}
+apply plugin: 'com.android.library'
+
+repositories {
+    jcenter()
+}
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        minSdkVersion 8
+        targetSdkVersion 19
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+}
+
+apply plugin: 'maven'
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            pom.groupId = 'com.dianjiang'
+            pom.artifactId = 'plugin-widget-switchbutton'
+            pom.version = '1.0.0-SNAPSHOT'
+
+            repository(url: "http://114.215.187.140:8081/repository/internal"){
+                authentication(userName: "dev", password: "dev123")
+            }
+        }
+    }
+}
