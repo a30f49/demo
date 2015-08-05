@@ -1,5 +1,6 @@
 <resources>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:activatedBackgroundIndicator">@drawable/list_item_selector_activated</item>
     </style>
 </resources>

@@ -21,8 +21,7 @@ public class MainActivity extends ActionBarActivity {
         mList.addHeaderView(header, null, false);
 
         String[] cities = getResources().getStringArray(R.array.cities);
-        mAdapter = new ArrayAdapter<>(this,
-            android.R.layout.simple_list_item_activated_1, cities);
+        mAdapter = new ArrayAdapter<>(this, R.layout.list_item, cities);
 
         mList.setAdapter(mAdapter);
     }

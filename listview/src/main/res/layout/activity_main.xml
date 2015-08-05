@@ -3,14 +3,15 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="horizontal"
-              tools:context=".MainActivity">
+              tools:context=".MainActivity"
+              android:background="#ffcccccc"
+        >
     <ListView android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/list_bg"
               android:layout_weight="1"
               android:choiceMode="singleChoice"
               android:id="@android:id/list"
-              android:listSelector="@drawable/list_item_selector"
+              android:listSelector="@null"
               android:scrollbars="none"
             >
     </ListView>
