@@ -1,0 +1,69 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.1.0'
+    }
+}
+apply plugin: 'com.android.library'
+
+repositories {
+    jcenter()
+}
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        minSdkVersion 11
+        targetSdkVersion 19
+        versionCode 1
+        versionName "1.0"
+    }
+}
+
+dependencies {
+}
+
+apply plugin: 'maven'
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            pom.groupId = 'com.dianjiang'
+            pom.artifactId = 'plugin-widget-pulltorefresh'
+            pom.version = '1.0.0-SNAPSHOT'
+
+            repository(url: "http://114.215.187.140:8081/repository/internal"){
+                authentication(userName: "dev", password: "dev123")
+            }
+        }
+    }
+}
+
+task publishToLocalMaven(type: Upload) {
+    description "Installs the artifacts to the local Maven repository."
+    repositories.mavenInstaller {
+        configuration = configurations.default
+        pom.groupId = 'com.dianjiang'
+        pom.artifactId = 'plugin-widget-pulltorefresh'
+        pom.version = '1.0.0-SNAPSHOT'
+    }
+}
+
+tasks.withType(Test) {
+    testLogging {
+        events 'failed', 'standardOut', 'standardError' //'passed', 'standardOut', 'skipped',
+        exceptionFormat 'full'
+        info {
+            displayGranularity = 0
+        }
+    }
+}
+
+
