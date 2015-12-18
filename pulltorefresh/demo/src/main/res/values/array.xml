@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="contents">
+        <item>广州</item>
+        <item>北京</item>
+        <item>重庆</item>
+        <item>上海</item>
+        <item>天津</item>
+        <item>杭州</item>
+        <item>苏州</item>
+        <item>无锡</item>
+        <item>佛山</item>
+        <item>珠海</item>
+        <item>大连</item>
+        <item>西安</item>
+        <item>台北</item>
+        <item>香港</item>
+        <item>澳门</item>
+        <item>赛马</item>
+        <item>南京</item>
+        <item>武汉</item>
+        <item>邯郸</item>
+        <item>成都</item>
+        <item>中山</item>
+        <item>深圳</item>
+    </string-array>
+</resources>

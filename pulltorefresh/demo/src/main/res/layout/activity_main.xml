@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@color/bg"
+        >
+    <com.dianjiang.plugin.widget.PullToRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/refresher"
+            >
+        <include layout="@layout/refresh_header"/>
+        <ListView
+                android:id="@android:id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                android:entries="@array/contents"
+                />
+        <include layout="@layout/loadmore_footer"/>
+    </com.dianjiang.plugin.widget.PullToRefreshLayout>
+
+</LinearLayout>

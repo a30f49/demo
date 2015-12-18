@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="loadmore_bg">#12000000</color>
+    <color name="refresh_bg">#12000000</color>
+    <color name="loadmore_text_color">#333333</color>
+    <color name="refresh_text_color">#333333</color>
+</resources>
